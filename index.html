@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimensionamento CIPA - NR-05</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f6f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto; }
+        h2 { color: #2c3e50; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #219150; }
+        .result { margin-top: 20px; padding: 15px; background: #e8f8f5; border-left: 5px solid #27ae60; display: none; }
+        .result h3 { margin-top: 0; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Gestão de CIPA (NR-05)</h2>
+    
+    <div class="form-group">
+        <label for="cnae">Código CNAE (somente números):</label>
+        <input type="text" id="cnae" placeholder="Ex: 4120400">
+    </div>
+
+    <div class="form-group">
+        <label for="func">Quantidade de Funcionários:</label>
+        <input type="number" id="func" placeholder="Ex: 120">
+    </div>
+
+    <button onclick="calcularCIPA()">Calcular Dimensionamento</button>
+
+    <div id="resultado" class="result">
+        <h3>Resultado do Dimensionamento</h3>
+        <p><strong>Representantes do Empregador (Designados):</strong></p>
+        <ul>
+            <li>Titulares: <span id="empTitular">0</span></li>
+            <li>Suplentes: <span id="empSuplente">0</span></li>
+        </ul>
+        
+        <p><strong>Representantes dos Empregados (Eleitos):</strong></p>
+        <ul>
+            <li>Titulares: <span id="funcTitular">0</span></li>
+            <li>Suplentes: <span id="funcSuplente">0</span></li>
+        </ul>
+
+        <p><strong>Estabilidade no Emprego:</strong></p>
+        <p>Total de candidatos/membros com estabilidade: <strong id="totalEstabilidade">0</strong> (Apenas representantes dos empregados eleitos).</p>
+    </div>
+</div>
+
+<script>
+function calcularCIPA() {
+    const cnae = document.getElementById('cnae').value.trim();
+    const numFunc = parseInt(document.getElementById('func').value);
+
+    if (!numFunc || numFunc <= 0) {
+        alert("Por favor, insira um número válido de funcionários.");
+        return;
+    }
+
+    // Lógica simplificada de dimensionamento conforme o Anexo I da NR-05.
+    // Na versão final, mapeie o CNAE ao Grupo correspondente da NR-05.
+    let empTitular = 0, empSuplente = 0;
+    let funcTitular = 0, funcSuplente = 0;
+
+    if (numFunc < 20) {
+        // Menos de 20 funcionários: Designado da CIPA
+        empTitular = 1;
+        empSuplente = 0;
+        funcTitular = 0;
+        funcSuplente = 0;
+    } else if (numFunc >= 20 && numFunc <= 50) {
+        empTitular = 1;
+        empSuplente = 1;
+        funcTitular = 1;
+        funcSuplente = 1;
+    } else if (numFunc > 50 && numFunc <= 100) {
+        empTitular = 2;
+        empSuplente = 2;
+        funcTitular = 2;
+        funcSuplente = 2;
+    } else {
+        // Exemplo para mais de 100
+        empTitular = 3;
+        empSuplente = 3;
+        funcTitular = 3;
+        funcSuplente = 3;
+    }
+
+    // Estabilidade é restrita aos representantes dos empregados (Titulares + Suplentes)
+    const estabilidade = funcTitular + funcSuplente;
+
+    // Exibir Resultados
+    document.getElementById('empTitular').innerText = empTitular;
+    document.getElementById('empSuplente').innerText = empSuplente;
+    document.getElementById('funcTitular').innerText = funcTitular;
+    document.getElementById('funcSuplente').innerText = funcSuplente;
+    document.getElementById('totalEstabilidade').innerText = estabilidade;
+
+    document.getElementById('resultado').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
