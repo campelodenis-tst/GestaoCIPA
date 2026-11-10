@@ -3,106 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dimensionamento CIPA - NR-05</title>
+    <title>Gestão CIPA - Segurança do Trabalho</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f6f9; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto; }
-        h2 { color: #2c3e50; text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
-        button:hover { background-color: #219150; }
-        .result { margin-top: 20px; padding: 15px; background: #e8f8f5; border-left: 5px solid #27ae60; display: none; }
-        .result h3 { margin-top: 0; }
+        :root {
+            --primary-color: #1b4d3e;
+            --secondary-color: #27ae60;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 10px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* Tela de Abertura / Banner */
+        .hero-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .hero-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #d1e7dd;
+        }
+        .hero-content {
+            padding: 20px;
+        }
+        .hero-content h1 {
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+            font-size: 22px;
+        }
+        .hero-content p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        /* Abas de Navegação */
+        .tabs {
+            display: flex;
+            background: #e2e8f0;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Módulos de Conteúdo */
+        .module {
+            display: none;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .module.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #444;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        button.action-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 5px;
+        }
+        button.action-btn:hover {
+            background-color: #219653;
+        }
+        /* Resultados e Tabelas */
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            display: none;
+        }
+        .result-box h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 16px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-top: 25px;
+        }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Gestão de CIPA (NR-05)</h2>
+<div class="container">
     
-    <div class="form-group">
-        <label for="cnae">Código CNAE (somente números):</label>
-        <input type="text" id="cnae" placeholder="Ex: 4120400">
+    <!-- Tela de Abertura / Capa -->
+    <div class="hero-card">
+        <!-- Imagem de capa corporativa CIPA / Segurança do Trabalho -->
+        <img class="hero-img" src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80" alt="Gestão CIPA e Segurança do Trabalho">
+        <div class="hero-content">
+            <h1>Gestão Eleitoral CIPA</h1>
+            <p>NR-05 • Dimensionamento e Cronograma de Implantação</p>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="func">Quantidade de Funcionários:</label>
-        <input type="number" id="func" placeholder="Ex: 120">
+    <!-- Navegação por Abas -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('dimensionamento', this)">1. Dimensionamento</button>
+        <button class="tab-btn" onclick="switchTab('calendario', this)">2. Calendário Eleitoral</button>
     </div>
 
-    <button onclick="calcularCIPA()">Calcular Dimensionamento</button>
-
-    <div id="resultado" class="result">
-        <h3>Resultado do Dimensionamento</h3>
-        <p><strong>Representantes do Empregador (Designados):</strong></p>
-        <ul>
-            <li>Titulares: <span id="empTitular">0</span></li>
-            <li>Suplentes: <span id="empSuplente">0</span></li>
-        </ul>
+    <!-- MÓDULO 1: DIMENSIONAMENTO CIPA -->
+    <div id="dimensionamento" class="module active">
+        <h2 style="font-size: 18px; color: var(--primary-color); margin-top: 0;">Dimensionamento de Membros</h2>
         
-        <p><strong>Representantes dos Empregados (Eleitos):</strong></p>
-        <ul>
-            <li>Titulares: <span id="funcTitular">0</span></li>
-            <li>Suplentes: <span id="funcSuplente">0</span></li>
-        </ul>
+        <div class="form-group">
+            <label for="cnae">Código CNAE da Empresa:</label>
+            <input type="text" id="cnae" placeholder="Ex: 4120-4/00">
+        </div>
 
-        <p><strong>Estabilidade no Emprego:</strong></p>
-        <p>Total de candidatos/membros com estabilidade: <strong id="totalEstabilidade">0</strong> (Apenas representantes dos empregados eleitos).</p>
+        <div class="form-group">
+            <label for="func">Quantidade de Funcionários:</label>
+            <input type="number" id="func" placeholder="Ex: 120">
+        </div>
+
+        <button class="action-btn" onclick="calcularDimensionamento()">Calcular Dimensionamento</button>
+
+        <div id="resDimensionamento" class="result-box">
+            <h3>Resultado do Dimensionamento</h3>
+            <p><strong>Representantes do Empregador (Designados):</strong></p>
+            <ul>
+                <li>Titulares: <span id="empTitular">0</span></li>
+                <li>Suplentes: <span id="empSuplente">0</span></li>
+            </ul>
+            
+            <p><strong>Representantes dos Empregados (Eleitos):</strong></p>
+            <ul>
+                <li>Titulares: <span id="funcTitular">0</span></li>
+                <li>Suplentes: <span id="funcSuplente">0</span></li>
+            </ul>
+
+            <p style="background: #e8f8f5; padding: 10px; border-radius: 6px; margin-top: 15px;">
+                <strong>Estabilidade no Emprego:</strong><br>
+                Total de candidatos/membros com estabilidade: <strong id="totalEstabilidade" style="color: #27ae60; font-size: 16px;">0</strong><br>
+                <small style="color: #666;">(Restrito aos representantes dos empregados eleitos - titulares e suplentes, desde o registro da candidatura até 1 ano após o mandato).</small>
+            </p>
+        </div>
     </div>
+
+    <!-- MÓDULO 2: CALENDÁRIO DE IMPLANTAÇÃO -->
+    <div id="calendario" class="module">
+        <h2 style="font-size: 18px; color: var(--primary-color); margin-top: 0;">Calendário de Implantação (Cronograma)</h2>
+        <p style="font-size: 13px; color: #666;">Informe a data de posse da CIPA vigente para calcular as datas exatas de cada etapa legal.</p>
+
+        <div class="form-group">
+            <label for="dataPosse">Data de Posse da CIPA Vigente / Atual:</label>
+            <input type="date" id="dataPosse">
+        </div>
+
+        <button class="action-btn" onclick="gerarCalendario()">Gerar Cronograma Eleitoral</button>
+
+        <div id="resCalendario" class="result-box">
+            <h3>Cronograma de Fases da CIPA</h3>
+            <div style="overflow-x: auto;">
+                <table id="tabelaCronograma">
+                    <thead>
+                        <tr>
+                            <th>Etapa / Fase</th>
+                            <th>Prazo Legal (NR-05)</th>
+                            <th>Data Prevista</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Desenvolvido para Segurança do Trabalho • Compatível com Android e iOS
+    </div>
+
 </div>
 
 <script>
-function calcularCIPA() {
-    const cnae = document.getElementById('cnae').value.trim();
+// Controle de Abas
+function switchTab(tabId, btn) {
+    document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+}
+
+// Lógica de Dimensionamento
+function calcularDimensionamento() {
     const numFunc = parseInt(document.getElementById('func').value);
 
     if (!numFunc || numFunc <= 0) {
-        alert("Por favor, insira um número válido de funcionários.");
+        alert("Por favor, informe uma quantidade válida de funcionários.");
         return;
     }
 
-    // Lógica simplificada de dimensionamento conforme o Anexo I da NR-05.
-    // Na versão final, mapeie o CNAE ao Grupo correspondente da NR-05.
-    let empTitular = 0, empSuplente = 0;
-    let funcTitular = 0, funcSuplente = 0;
+    let empT = 0, empS = 0, funcT = 0, funcS = 0;
 
+    // Regra base simplificada NR-05 / Anexo I
     if (numFunc < 20) {
-        // Menos de 20 funcionários: Designado da CIPA
-        empTitular = 1;
-        empSuplente = 0;
-        funcTitular = 0;
-        funcSuplente = 0;
+        empT = 1; empS = 0; funcT = 0; funcS = 0;
     } else if (numFunc >= 20 && numFunc <= 50) {
-        empTitular = 1;
-        empSuplente = 1;
-        funcTitular = 1;
-        funcSuplente = 1;
+        empT = 1; empS = 1; funcT = 1; funcS = 1;
     } else if (numFunc > 50 && numFunc <= 100) {
-        empTitular = 2;
-        empSuplente = 2;
-        funcTitular = 2;
-        funcSuplente = 2;
+        empT = 2; empS = 2; funcT = 2; funcS = 2;
+    } else if (numFunc > 100 && numFunc <= 500) {
+        empT = 3; empS = 3; funcT = 3; funcS = 3;
     } else {
-        // Exemplo para mais de 100
-        empTitular = 3;
-        empSuplente = 3;
-        funcTitular = 3;
-        funcSuplente = 3;
+        empT = 4; empS = 4; funcT = 4; funcS = 4;
     }
 
-    // Estabilidade é restrita aos representantes dos empregados (Titulares + Suplentes)
-    const estabilidade = funcTitular + funcSuplente;
+    const estabilidade = funcT + funcS;
 
-    // Exibir Resultados
-    document.getElementById('empTitular').innerText = empTitular;
-    document.getElementById('empSuplente').innerText = empSuplente;
-    document.getElementById('funcTitular').innerText = funcTitular;
-    document.getElementById('funcSuplente').innerText = funcSuplente;
+    document.getElementById('empTitular').innerText = empT;
+    document.getElementById('empSuplente').innerText = empS;
+    document.getElementById('funcTitular').innerText = funcT;
+    document.getElementById('funcSuplente').innerText = funcS;
     document.getElementById('totalEstabilidade').innerText = estabilidade;
 
-    document.getElementById('resultado').style.display = 'block';
+    document.getElementById('resDimensionamento').style.display = 'block';
+}
+
+// Lógica de Geração do Calendário (Baseado na planilha do usuário)
+function gerarCalendario() {
+    const dataPosseInput = document.getElementById('dataPosse').value;
+
+    if (!dataPosseInput) {
+        alert("Por favor, selecione a data de posse da CIPA vigente.");
+        return;
+    }
+
+    const posse = new Date(dataPosseInput + 'T00:00:00');
+
+    // Função auxiliar para somar dias a uma data
+    function adicionarDias(data, dias) {
+        let novaData = new Date(data);
+        novaData.setDate(novaData.getDate() + dias);
+        return novaData;
+    }
+
+    // Função para formatar a data DD/MM/AAAA
+    function formatarData(data) {
+        const dia = String(data.getDate()).padStart(2, '0');
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const ano = data.getFullYear();
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    // Base de cálculo retroativa a partir da data de posse atual (= término do mandato anterior / início do novo ciclo)
+    // Conforme o modelo da planilha:
+    // Posse Atual = Data informada (Ex: 10/02/2025)
+    // Término do mandato anterior = 1 ano antes da posse atual (ou ajuste de ciclo)
+    
+    // Vamos calcular os marcos retroativos a partir da data de posse:
+    const dEditalConvocacao = adicionarDias(posse, -60); // 60 dias antes da posse
+    const dComissaoEleitoral = adicionarDias(posse, -55); // 55 dias antes do término
+    const dEnvioSindicatoConvocacao = adicionarDias(dEditalConvocacao, 5); // 5 dias após convocação
+    const dInicioInscricoes = adicionarDias(posse, -49); // Aproximadamente 20 dias antes da eleição
+    const dPubEditalInscricao = adicionarDias(posse, -44); 
+    const dFimInscricoes = adicionarDias(posse, -35);
+    const dRetiradaEditalInscricoes = dFimInscricoes;
+    const dEleicao = adicionarDias(posse, -29); // Realização da eleição (~30 dias antes)
+    const dApuration = dEleicao;
+    const dResultadoAta = adicionarDias(dEleicao, 1);
+    const dCursoMin = adicionarDias(dEleicao, 2);
+    const dComunicarSindicato = adicionarDias(dEleicao, 15);
+    const dCursoMax = adicionarDias(posse, -1);
+    const dTerminoMandato = adicionarDias(posse, 0); // O término do anterior coincide com a posse ou dia anterior
+
+    const etapas = [
+        { fase: "1 - Edital de Convocação para Eleição", prazo: "60 dias antes da posse", data: formatarData(dEditalConvocacao) },
+        { fase: "1.1 - Formação da Comissão Eleitoral", prazo: "55 dias antes do término", data: formatarData(dComissaoEleitoral) },
+        { fase: "1.2 - Enviar Cópia do Edital ao Sindicato", prazo: "5 dias após a convocação", data: formatarData(dEnvioSindicatoConvocacao) },
+        { fase: "2 - Início das Inscrições de Candidatos", prazo: "20 dias antes da eleição", data: formatarData(dInicioInscricoes) },
+        { fase: "2.1 - Publicação Edital de Inscrição", prazo: "45 dias antes do término", data: formatarData(dPubEditalInscricao) },
+        { fase: "Término Inscrições de Candidatos", prazo: "6 dias antes da eleição", data: formatarData(dFimInscricoes) },
+        { fase: "3 - Realização da Eleição (Votação)", prazo: "30 dias antes do término", data: formatarData(dEleicao) },
+        { fase: "3.1 - Apuração dos Votos", prazo: "Mesmo dia da eleição", data: formatarData(dApuration) },
+        { fase: "3.2 - Resultado / Ata da Eleição", prazo: "1 dia após a apuração", data: formatarData(dResultadoAta) },
+        { fase: "4 - Curso para Cipeiros (Início Mínimo)", prazo: "Depois da eleição", data: formatarData(dCursoMin) },
+        { fase: "5 - Comunicar Sindicato (Resultado/Posse)", prazo: "15 dias após a eleição", data: formatarData(dComunicarSindicato) },
+        { fase: "4.1 - Curso para Cipeiros (Data Máxima)", prazo: "Antes da posse", data: formatarData(dCursoMax) },
+        { fase: "6 - Realização da Posse / Nova Gestão", prazo: "Data de Posse informada", data: formatarData(posse) }
+    ];
+
+    let tbody = document.querySelector('#tabelaCronograma tbody');
+    tbody.innerHTML = '';
+
+    etapas.forEach(etapa => {
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td><strong>${etapa.fase}</strong></td><td>${etapa.prazo}</td><td><span style="color: #27ae60; font-weight: bold;">${etapa.data}</span></td>`;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('resCalendario').style.display = 'block';
 }
 </script>
 
